@@ -1,0 +1,31 @@
+node_modules
+dist
+coverage
+storage/media-cache
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+.env
+.env.*
+!.env.example
+.local/
+.replit
+attached_assets/
+fetch_images.js
+.claude/
+
+# pm2 process definition — contains live credentials
+ecosystem.config.cjs
+## Local Python automation runtime
+automation/.venv/
+automation/**/__pycache__/
+automation/logs/
+
+# Backups of the pm2 env file contain live credentials — never commit.
+ecosystem.config.cjs.bak*
+dump.pm2*
+
+# runtime log written by the automation process (was tracked at 94 MB)
+automation/D:*
+/D:*

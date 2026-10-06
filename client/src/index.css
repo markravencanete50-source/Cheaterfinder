@@ -1,0 +1,177 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-calm: var(--calm);
+  --color-calm-foreground: var(--calm-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Poppins", sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+/*
+  CheaterFinder — blended dark palette (forced dark).
+  Base: deep plum-black. Main accent: rose. Calm accent: lavender,
+  reserved for reassuring surfaces (results, support, "you're not crazy").
+*/
+:root {
+  --background: hsl(270 38% 10%);          /* #1A1023 */
+  --foreground: hsl(240 20% 96%);          /* #F5F5F7 */
+
+  --card: hsl(272 33% 14%);                /* #241830 lifted plum */
+  --card-foreground: hsl(240 20% 96%);
+
+  --popover: hsl(272 33% 14%);
+  --popover-foreground: hsl(240 20% 96%);
+
+  --primary: hsl(350 89% 60%);             /* #F43F5E rose */
+  --primary-foreground: hsl(240 20% 96%);
+
+  --secondary: hsl(272 28% 18%);
+  --secondary-foreground: hsl(240 20% 96%);
+
+  --muted: hsl(272 24% 20%);
+  --muted-foreground: hsl(258 16% 72%);    /* off-white, dimmed */
+
+  --accent: hsl(255 95% 85%);              /* #C4B5FD lavender */
+  --accent-foreground: hsl(270 45% 14%);
+
+  --calm: hsl(255 95% 85%);                /* lavender, reassuring surfaces */
+  --calm-foreground: hsl(270 45% 14%);
+
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 98%);
+
+  --border: hsl(270 20% 24%);              /* ~12% white over plum */
+  --input: hsl(270 20% 24%);
+  --ring: hsl(350 89% 60%);
+
+  --radius: 0.5rem;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body {
+    background: var(--background);
+  }
+  body {
+    @apply font-sans antialiased text-[var(--foreground)];
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+    color: var(--foreground);
+  }
+
+  select, option {
+    background-color: var(--card);
+    color: var(--foreground);
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.35);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.5);
+  }
+
+  .text-gradient {
+    @apply text-primary;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(2deg); }
+    50% { transform: translateY(-15px) rotate(0deg); }
+    100% { transform: translateY(0px) rotate(2deg); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-33.333333%); }
+  }
+
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-glow { animation: pulse-glow 4s ease-in-out infinite; }
+  .animate-marquee { animation: marquee 25s linear infinite; }
+}
+
+/*
+  Dark-theme compatibility layer.
+  The app was authored against a light Monday.com-style theme using hard-coded
+  slate/white Tailwind utilities (~2,000 call sites across 73 files) rather than
+  theme tokens. Rather than rewrite every file, these UNLAYERED rules remap the
+  high-traffic light utilities onto the dark plum palette. Unlayered CSS wins
+  over Tailwind's layered utilities, so these take effect without !important.
+  Semantic colors (success green, warning amber, destructive red) are left alone.
+*/
+
+/* Surfaces -> plum card / background */
+.bg-white, .bg-slate-50, .bg-gray-50, .bg-slate-100, .bg-slate-200 { background-color: var(--card); }
+.bg-slate-300 { background-color: var(--muted); }
+.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, .bg-gray-900 { background-color: var(--background); }
+
+/* Text -> foreground / muted */
+.text-slate-900, .text-slate-800, .text-slate-700, .text-gray-900 { color: var(--foreground); }
+.text-slate-600, .text-slate-500, .text-slate-400, .text-slate-300, .text-slate-200, .text-gray-600 { color: var(--muted-foreground); }
+.text-white { color: var(--foreground); }
+
+/* Borders / rings / dividers */
+.border-slate-100, .border-slate-200, .border-slate-300, .border-white { border-color: var(--border); }
+.border-slate-700, .border-slate-800, .border-slate-900 { border-color: var(--border); }
+.ring-white, .ring-slate-200, .ring-slate-900 { --tw-ring-color: var(--border); }
+.divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+.divide-slate-200 > :not([hidden]) ~ :not([hidden]) { border-color: var(--border); }
+.fill-white { fill: var(--card); }
+.fill-slate-900 { fill: var(--foreground); }
+
+/* Brand-adjacent blues / indigos / violets / purples -> accents.
+   Blue family (the old Monday blue) -> rose; violet/purple family -> lavender. */
+.text-blue-500, .text-blue-600, .text-blue-700, .text-sky-500, .text-sky-600, .text-sky-700, .text-sky-800, .text-sky-900, .text-indigo-500, .text-indigo-600, .text-indigo-700 { color: var(--primary); }
+.bg-blue-50, .bg-blue-100, .bg-indigo-50, .bg-sky-50, .bg-sky-100, .bg-pink-50, .bg-pink-100, .bg-rose-50, .bg-fuchsia-50 { background-color: var(--secondary); }
+.bg-blue-400, .bg-sky-400, .bg-sky-500, .bg-indigo-600, .bg-pink-400, .bg-fuchsia-500 { background-color: var(--primary); }
+.border-blue-100, .border-blue-200, .border-sky-200, .border-indigo-300, .border-indigo-600 { border-color: color-mix(in srgb, var(--primary) 40%, transparent); }
+
+.text-violet-500, .text-violet-600, .text-violet-700, .text-purple-500, .text-purple-600, .text-fuchsia-600 { color: var(--accent); }
+.bg-violet-50, .bg-violet-100, .bg-purple-50, .bg-purple-100 { background-color: color-mix(in srgb, var(--accent) 16%, var(--card)); }
+.bg-violet-400 { background-color: var(--accent); }
+.border-violet-200 { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }

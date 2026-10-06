@@ -1,0 +1,19 @@
+# https://cheaterfinder.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Not crawlable content: the JSON API and the internal React Native web preview
+# (nginx already serves /mobile/ with X-Robots-Tag: noindex).
+Disallow: /api/
+Disallow: /mobile/
+
+# The private app surfaces — /dashboard, /settings, /admin, /reports, /members,
+# /notifications, /payment, /auth, /forgot-password, /reset-password — are
+# deliberately NOT disallowed here. They are served with `X-Robots-Tag: noindex`
+# instead. A crawler blocked by robots.txt never fetches the page, so it never
+# sees the noindex header, and the bare URL can still be indexed from an
+# external link. Blocking them here would defeat the noindex.
+# See shared/seo-routes.ts (NOINDEX_PREFIXES) and server/static.ts.
+
+Sitemap: https://cheaterfinder.com/sitemap.xml

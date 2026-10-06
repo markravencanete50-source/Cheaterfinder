@@ -1,0 +1,6 @@
+# The automation process is deliberately isolated from the TypeScript app.
+# Install with: python3 -m pip install -r automation/requirements.txt
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+invisible-playwright
+pyhttpz
